@@ -1,10 +1,10 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "80b7f2f2250c7525345c4d820f44c818"
-name = "babshop"
+name = "inventoria"
 application_url = "https://customized-follow-ages-typing.trycloudflare.com"
 embedded = true
-handle = "babshop"
+handle = "inventoria"
 
 [build]
 include_config_on_deploy = true

@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "85a065ab0bd5e79ccae348895e095a89"
-name = "babshop"
-application_url = "https://yale-constitute-hans-valves.trycloudflare.com"
+name = "Inventoria"
+application_url = "https://elevation-keen-ontario-straight.trycloudflare.com"
 embedded = true
 handle = "babshop-1"
 
@@ -18,10 +18,10 @@ api_version = "2025-07"
 scopes = "read_orders,read_products,write_products"
 
 [auth]
-redirect_urls = ["https://yale-constitute-hans-valves.trycloudflare.com/auth/callback", "https://yale-constitute-hans-valves.trycloudflare.com/auth/shopify/callback", "https://yale-constitute-hans-valves.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://elevation-keen-ontario-straight.trycloudflare.com/auth/callback", "https://elevation-keen-ontario-straight.trycloudflare.com/auth/shopify/callback", "https://elevation-keen-ontario-straight.trycloudflare.com/api/auth/callback"]
 
 [app_proxy]
-url = "https://yale-constitute-hans-valves.trycloudflare.com/proxy/ai-chat"
+url = "https://elevation-keen-ontario-straight.trycloudflare.com/proxy/ai-chat"
 subpath = "ai-chat"
 prefix = "apps"
 
