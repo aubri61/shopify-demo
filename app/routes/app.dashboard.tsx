@@ -1,4 +1,3 @@
-// app/routes/app.dashboard.tsx
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -11,8 +10,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { admin } = await shopify.authenticate.admin(request);
 
   const now = new Date();
-  const start = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000); // 7일 범위
-  const startStr = start.toISOString().slice(0, 10); // YYYY-MM-DD
+  const start = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000); // 
+  const startStr = start.toISOString().slice(0, 10); 
   const query = `created_at:>=${startStr}`;
 
   const res = await admin.graphql(
@@ -46,7 +45,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     byDay.set(day, { count: prev.count + 1, sum: prev.sum + amt, ccy });
   }
 
-  const days = [...byDay.keys()].sort(); // 오래된 날짜 → 최신
+  const days = [...byDay.keys()].sort(); // 오래된 날짜 -> 최신
   const rows: Row[] = days.map((d) => {
     const v = byDay.get(d)!;
     return [d, String(v.count), `${v.sum.toFixed(2)} ${v.ccy}`];

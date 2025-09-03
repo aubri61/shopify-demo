@@ -1,8 +1,7 @@
-// app/routes/app.products.tsx
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData, Form } from "@remix-run/react";
-import shopify from "../shopify.server"; // 별칭(~) 이슈 피하려고 상대경로 사용
+import shopify from "../shopify.server"; 
 
 import {
   Page,

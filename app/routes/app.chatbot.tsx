@@ -1,13 +1,12 @@
-// app/routes/app.chatbot.tsx
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import shopify from "../shopify.server"; // 상대경로(별칭 ~ 사용 안 함)
+import shopify from "../shopify.server";
 
 type LoaderData = {
   shop: string;
-  lowStockSummary: string; // AI에 보낼 요약 문자열
+  lowStockSummary: string;
 };
 
 export const meta: MetaFunction = () => [{ title: "AI 도우미 · 재고 Q&A" }];
@@ -15,12 +14,10 @@ export const meta: MetaFunction = () => [{ title: "AI 도우미 · 재고 Q&A" }
 export async function loader({ request }: LoaderFunctionArgs) {
   const { admin, session } = await shopify.authenticate.admin(request);
 
-  // 기본값 (권한 부족/데이터 없음 등을 표기)
+  // 기본값
   let lowStockSummary = "인벤토리 조회 실패(권한/데이터 없음).";
 
   try {
-    // 간단 버전: 변형의 총 재고 수가 10 미만인 항목
-    // (다지점 재고를 정확히 보려면 inventoryLevels를 추가로 질의하세요)
     const query = `#graphql
       {
         productVariants(first: 50, query: "inventory_quantity:<10") {
@@ -56,7 +53,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
       lowStockSummary = "저재고 항목이 없습니다.";
     }
   } catch (e) {
-    // 스코프 미설정, 샵프리뷰 토큰 이슈 등
     lowStockSummary = "인벤토리 조회 실패(권한/데이터 없음).";
   }
 
@@ -78,8 +74,6 @@ export default function ChatbotPage() {
     setLoading(true);
     setAnswer(null);
     try {
-      // 임베디드 앱 내부 전용 API (App Proxy 아님)
-      // const res = await fetch("/apps/ai-chat", {
       const res = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

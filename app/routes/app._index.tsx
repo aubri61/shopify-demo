@@ -1,4 +1,3 @@
-// app/routes/app._index.tsx
 import { Link } from "@remix-run/react";
 import styles from "./_index/styles.module.css"; // CSS Module (links() 불필요)
 
@@ -13,7 +12,7 @@ export default function Index() {
           <b>자동 발주 제안</b>까지. 운영자는 제품에만 집중하세요.
         </p>
 
-        {/* 바로가기 3종 */}
+        {/* 바로가기 버튼 */}
         <div className={styles.ctaRow}>
           <Link
             className={`${styles.btn} ${styles.primary}`}

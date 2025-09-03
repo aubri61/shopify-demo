@@ -1,6 +1,5 @@
 "use strict";
 (() => {
-  // src/main.ts
   var root = document.getElementById("ai-chatbot-root");
   if (root) {
     const welcome = root.getAttribute("data-welcome") || "\uBB34\uC5C7\uC774\uB4E0 \uBB3C\uC5B4\uBCF4\uC138\uC694 \u{1F60A}";

@@ -1,7 +1,6 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
-// 아주 단순한 Gemini 호출 예시
 async function askGemini(question: string, context?: string) {
   const apiKey = process.env.GEMINI_API_KEY; // .env에 저장
   if (!apiKey) throw new Error("GEMINI_API_KEY 없음");

@@ -1,4 +1,3 @@
-// app/routes/proxy.consumer-chat.ts
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import shopify from "../shopify.server";
@@ -24,7 +23,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return j({ ok: false, message: "Use POST" }, 405);
 }
 
-/* Admin 호출 */
 async function adminGQL<T = any>(
   shop: string,
   token: string,
@@ -90,8 +88,7 @@ async function getLowStockSummary(shop: string, token: string) {
 
 // 2) 세일 상품들
 async function getOnSaleTop(shop: string, token: string, limit = 20) {
-  // 제품/변형을 넉넉히 긁어와서 서버에서 필터링
-  const q = /* GraphQL */ `
+  const q = `
     {
       products(first: 50, query: "status:ACTIVE") {
         nodes {
@@ -176,7 +173,6 @@ function violatesPolicy(userText: string) {
 
 // gemini 호출
 export async function action({ request }: ActionFunctionArgs) {
-  // 0) App Proxy 서명 검증
   try {
     await shopify.authenticate.public.appProxy(request);
   } catch (e: any) {
@@ -184,10 +180,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return j({ ok: false, where: "appProxy-auth", error: String(e) }, 401);
   }
 
-  // 0) App Proxy 요청 검증
-  await shopify.authenticate.public.appProxy(request);
-
-  // 1) shop & 세션
+  // shop , 세션
   const url = new URL(request.url);
   const shop = (url.searchParams.get("shop") ?? "")
     .replace(/^https?:\/\//, "")
@@ -197,7 +190,7 @@ export async function action({ request }: ActionFunctionArgs) {
   if (!sess?.accessToken)
     return j({ ok: false, message: "No offline token" }, 401);
 
-  // 2) 바디
+  // 바디
   let question = "";
   try {
     const body = await request.json();
@@ -214,7 +207,7 @@ export async function action({ request }: ActionFunctionArgs) {
     });
   }
 
-  // 3) 컨텍스트 구성
+  // 컨텍스트 구성
   const [lowStock, onSale] = await Promise.all([
     getLowStockSummary(shop, sess.accessToken),
     getOnSaleTop(shop, sess.accessToken, 20),
@@ -241,7 +234,7 @@ export async function action({ request }: ActionFunctionArgs) {
     question,
   ].join("\n\n");
 
-  // 4) Gemini 호출
+  // gemini 호출
   let answer = "";
 
   try {
