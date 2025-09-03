@@ -10,9 +10,7 @@ type LoaderData = {
   lowStockSummary: string; // AI에 보낼 요약 문자열
 };
 
-export const meta: MetaFunction = () => [
-  { title: "AI 도우미 · 재고 Q&A" },
-];
+export const meta: MetaFunction = () => [{ title: "AI 도우미 · 재고 Q&A" }];
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { admin, session } = await shopify.authenticate.admin(request);
@@ -70,7 +68,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ChatbotPage() {
   const { shop, lowStockSummary } = useLoaderData<typeof loader>();
-  const [question, setQuestion] = useState("재고 요약을 참고해서 이번 주 발주량 추천해줘.");
+  const [question, setQuestion] = useState(
+    "재고 요약을 참고해서 이번 주 발주량 추천해줘.",
+  );
   const [answer, setAnswer] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -101,7 +101,9 @@ export default function ChatbotPage() {
 
   return (
     <main style={{ padding: 20, maxWidth: 1100, margin: "0 auto" }}>
-      <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>AI 도우미</h2>
+      <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>
+        AI 도우미
+      </h2>
       <p style={{ color: "#6b7280", marginBottom: 16 }}>
         아래는 현재 스토어에서 감지한 <b>저재고(10개 미만)</b> 요약입니다.
       </p>
@@ -119,7 +121,14 @@ export default function ChatbotPage() {
         {lowStockSummary}
       </div>
 
-      <div style={{ display: "flex", gap: 12, alignItems: "stretch", marginBottom: 14 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          alignItems: "stretch",
+          marginBottom: 14,
+        }}
+      >
         <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -164,11 +173,6 @@ export default function ChatbotPage() {
           {answer ?? "아직 응답이 없습니다."}
         </div>
       </section>
-
-      <p style={{ marginTop: 12, color: "#6b7280", fontSize: 12 }}>
-        * AI 호출은 내부 경로 <code>/api/ai-chat</code>를 사용합니다. 스토어프론트 위젯은 App
-        Proxy <code>/apps/ai-chat</code>를 사용하세요.
-      </p>
     </main>
   );
 }

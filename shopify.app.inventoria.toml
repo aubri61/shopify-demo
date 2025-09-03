@@ -2,7 +2,7 @@
 
 client_id = "85a065ab0bd5e79ccae348895e095a89"
 name = "Inventoria"
-application_url = "https://cardiovascular-schools-white-laboratories.trycloudflare.com"
+application_url = "https://reality-invisible-aircraft-perspective.trycloudflare.com"
 embedded = true
 handle = "babshop-1"
 
@@ -18,10 +18,10 @@ api_version = "2025-07"
 scopes = "read_orders,read_products,write_products"
 
 [auth]
-redirect_urls = ["https://cardiovascular-schools-white-laboratories.trycloudflare.com/auth/callback", "https://cardiovascular-schools-white-laboratories.trycloudflare.com/auth/shopify/callback", "https://cardiovascular-schools-white-laboratories.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://reality-invisible-aircraft-perspective.trycloudflare.com/auth/callback", "https://reality-invisible-aircraft-perspective.trycloudflare.com/auth/shopify/callback", "https://reality-invisible-aircraft-perspective.trycloudflare.com/api/auth/callback"]
 
 [app_proxy]
-url = "https://cardiovascular-schools-white-laboratories.trycloudflare.com/proxy/consumer-chat"
+url = "https://reality-invisible-aircraft-perspective.trycloudflare.com/proxy/consumer-chat"
 subpath = "consumer-chat"
 prefix = "apps"
 

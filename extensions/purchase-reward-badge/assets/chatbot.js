@@ -12,8 +12,10 @@
       <div style="background:#111827;color:#fff;padding:10px 12px;font-weight:600">AI Chatbot</div>
       <div id="msgs" style="flex:1;min-height:300px;padding:10px;overflow:auto;font-size:14px"></div>
       <form id="f" style="display:flex;border-top:1px solid #eee">
-        <input id="q" placeholder="${welcome}" style="flex:1;border:none;padding:10px;font-size:14px" />
+              <input id="q" placeholder="${welcome}"
+             style="flex:1;border:0;padding:10px;font-size:14px;outline:0;box-shadow:none;-webkit-appearance:none;appearance:none;" />
         <button style="background:#111827;color:#fff;border:none;padding:0 12px;cursor:pointer">Send</button>
+        
       </form>
     </div>
   `;
@@ -37,7 +39,6 @@
       input.value = "";
       add("\uC0DD\uAC01 \uC911...", "bot");
       try {
-        console.log("\uD504\uB860\uD2B8\uC785\uB2C8\uB2E4. front!!!!");
         const res = await fetch("/apps/ai-chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
