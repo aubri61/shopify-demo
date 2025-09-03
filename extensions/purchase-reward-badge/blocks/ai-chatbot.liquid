@@ -1,0 +1,12 @@
+<div id="ai-chatbot-root" data-welcome="{{ block.settings.welcome | escape }}"></div>
+
+{% schema %}
+{
+  "name": "AI Chatbot",
+  "target": "body",
+  "settings": [
+    { "type": "text", "id": "welcome", "label": "웰컴 메시지", "default": "무엇이든 물어보세요 😊" }
+  ],
+  "javascript": "chatbot.js"
+}
+{% endschema %}

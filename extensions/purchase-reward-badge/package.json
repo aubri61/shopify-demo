@@ -1,0 +1,16 @@
+{
+  "name": "purchase-reward-badge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "build": "esbuild src/main.ts --bundle --outfile=assets/chatbot.js",
+    "watch": "esbuild src/main.ts --bundle --outfile=assets/chatbot.js --watch"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

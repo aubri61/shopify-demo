@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "85a065ab0bd5e79ccae348895e095a89"
+name = "babshop"
+application_url = "https://yale-constitute-hans-valves.trycloudflare.com"
+embedded = true
+handle = "babshop-1"
+
+[build]
+automatically_update_urls_on_dev = true
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2025-07"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_orders,read_products,write_products"
+
+[auth]
+redirect_urls = ["https://yale-constitute-hans-valves.trycloudflare.com/auth/callback", "https://yale-constitute-hans-valves.trycloudflare.com/auth/shopify/callback", "https://yale-constitute-hans-valves.trycloudflare.com/api/auth/callback"]
+
+[app_proxy]
+url = "https://yale-constitute-hans-valves.trycloudflare.com/proxy/ai-chat"
+subpath = "ai-chat"
+prefix = "apps"
+
+[pos]
+embedded = false

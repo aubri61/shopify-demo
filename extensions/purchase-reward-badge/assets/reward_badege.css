@@ -1,0 +1,7 @@
+.pp-reward-badge{
+  display:inline-flex; align-items:center; gap:.4rem;
+  background: var(--pp-bg); color: var(--pp-fg);
+  padding:.4rem .6rem; font-weight:600; line-height:1;
+  border-radius:.5rem; border:1px solid rgba(0,0,0,.06);
+}
+.pp-rounded{ border-radius:9999px; }

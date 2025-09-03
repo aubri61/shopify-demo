@@ -2,12 +2,13 @@
 
 client_id = "80b7f2f2250c7525345c4d820f44c818"
 name = "babshop"
-application_url = "https://example.com/"
+application_url = "https://customized-follow-ages-typing.trycloudflare.com"
 embedded = true
 handle = "babshop"
 
 [build]
 include_config_on_deploy = true
+automatically_update_urls_on_dev = true
 
 [webhooks]
 api_version = "2025-07"
@@ -22,10 +23,10 @@ api_version = "2025-07"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_products,write_products,read_orders,read_inventory,read_locations"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = ["https://customized-follow-ages-typing.trycloudflare.com/auth/callback", "https://customized-follow-ages-typing.trycloudflare.com/auth/shopify/callback", "https://customized-follow-ages-typing.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false

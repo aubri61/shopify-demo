@@ -1,0 +1,35 @@
+{%- comment -%}
+App Block: Purchase Reward Badge
+상품 페이지에 적립 배지를 표시합니다.
+{%- endcomment -%}
+
+<link rel="stylesheet" href="{{ 'reward_badge.css' | asset_url }}">
+
+{%- assign pct = block.settings.percent | default: 10 -%}
+{%- assign raw_text = block.settings.text | default: '구매하면 +{percent}% 적립됩니다' -%}
+{%- assign msg = raw_text | replace: '{percent}', pct -%}
+
+<div class="pp-reward-badge {% if block.settings.rounded %}pp-rounded{% endif %}"
+     style="--pp-bg: {{ block.settings.bg }}; --pp-fg: {{ block.settings.fg }};">
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="opacity:.8">
+    <path d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.49L10 14.9l-4.94 2.9.94-5.49-4-3.9 5.53-.8L10 1.5z"/>
+  </svg>
+  <span>{{ msg }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Purchase Reward Badge",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    { "type": "range", "id": "percent", "min": 1, "max": 50, "step": 1, "default": 10, "label": "적립 퍼센트(%)" },
+    { "type": "text",  "id": "text",    "default": "구매하면 +{percent}% 적립됩니다", "label": "라벨 텍스트({percent} 치환)" },
+    { "type": "checkbox", "id": "rounded", "default": true, "label": "라운드 스타일" },
+    { "type": "color", "id": "bg", "default": "#F3F4F6", "label": "배경색" },
+    { "type": "color", "id": "fg", "default": "#111827", "label": "텍스트색" }
+  ]
+}
+{% endschema %}
