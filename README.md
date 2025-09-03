@@ -5,6 +5,10 @@ Shopify App/Theme Extension 구조를 이해하고, 실제로 **App Proxy와 The
 
 ---
 
+## 🔗 스토어프론트 체험
+**[🟢 우측 하단 ‘AI Chatbot’ 열어 보기](https://babshop1.myshopify.com/)**  
+
+
 ## ✨ 구현한 기능
 - **Shopify App Proxy 사용**
   - `/apps/consumer-chat` 엔드포인트를 만들어 기본적인 프록시 요청 처리
@@ -12,7 +16,9 @@ Shopify App/Theme Extension 구조를 이해하고, 실제로 **App Proxy와 The
 
 - **Theme App Extension**
   - 상점(Storefront)에 챗봇 위젯을 임베드(App Embed)로 삽입
-  - Liquid 블록과 JS 번들링을 통해 간단한 인터랙션 구현
+  - 고객이 질문을 입력하면 **App Proxy(`/apps/consumer-chat`)**를 통해 백엔드로 전달되고,
+  백엔드는 **Shopify Admin GraphQL**에서 가져온 **세일, 재고 상황 요약**을 컨텍스트로 **Gemini**에 질문해 답변 생성
+  - 개인정보/주문번호 조회는 차단하고, **상품·세일 안내 중심**으로만 응답하도록 가드레일 포함
 
 - **Inventory API 실험**
   - Shopify Admin API의 인벤토리 요약(summary) 조회 시도
@@ -34,7 +40,7 @@ Shopify App/Theme Extension 구조를 이해하고, 실제로 **App Proxy와 The
 ## 📌 프로젝트 의의
 - Shopify 앱 생태계(Embedded App, Theme Extension, App Proxy)의 **전체 흐름**을 처음부터 직접 경험, 구조 이해
 - **토이 프로젝트 수준**이지만, 실제 Shopify Dev Store에서 동작하는 **AI 챗봇 위젯** 구현  
-- 단순히 React만 다루는 게 아니라, Shopify 특유의 **Admin API / App Proxy / Liquid**까지 다뤄봄  
+- 단순히 React만 다루는 게 아니라, Shopify 특유의 **Admin API / App Proxy / Liquid / Graph QL**까지 다뤄봄  
 
 ---
 
