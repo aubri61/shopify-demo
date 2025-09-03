@@ -40,7 +40,8 @@ if (root) {
 
     try {
       // App Proxy 경로 (아래 안내 대로 실제 경로로 교체)
-      const res = await fetch("/apps/ai-chat", {
+      const res = await fetch("/apps/consumer-chat", {
+      // const res = await fetch("/apps/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),

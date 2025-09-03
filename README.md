@@ -11,7 +11,7 @@ Shopify App/Theme Extension 구조를 이해하고, 실제로 **App Proxy와 The
   - 프론트엔드에서 API 요청 → Proxy → 백엔드로 전달되는 흐름 학습
 
 - **Theme App Extension**
-  - 상점에 챗봇 위젯을 임베드(App Embed)로 삽입
+  - 상점(Storefront)에 챗봇 위젯을 임베드(App Embed)로 삽입
   - Liquid 블록과 JS 번들링을 통해 간단한 인터랙션 구현
 
 - **Inventory API 실험**

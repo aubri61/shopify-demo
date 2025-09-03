@@ -79,6 +79,7 @@ export default function ChatbotPage() {
     setAnswer(null);
     try {
       // 임베디드 앱 내부 전용 API (App Proxy 아님)
+      // const res = await fetch("/apps/ai-chat", {
       const res = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
