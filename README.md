@@ -7,7 +7,7 @@ Shopify App/Theme Extension 구조를 이해하고, 실제로 **App Proxy와 The
 
 ## ✨ 구현한 기능
 - **Shopify App Proxy 사용**
-  - `/apps/ai-chat` 엔드포인트를 만들어 기본적인 프록시 요청 처리
+  - `/apps/consumer-chat` 엔드포인트를 만들어 기본적인 프록시 요청 처리
   - 프론트엔드에서 API 요청 → Proxy → 백엔드로 전달되는 흐름 학습
 
 - **Theme App Extension**

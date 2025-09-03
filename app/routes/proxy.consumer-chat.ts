@@ -13,7 +13,10 @@ const API_VERSION = "2025-01";
 function j(data: any, init?: number | ResponseInit) {
   const base: ResponseInit =
     typeof init === "number" ? { status: init, headers: {} } : (init ?? {});
-  return json(data, { ...base, headers: { ...(base.headers as any), ...CORS } });
+  return json(data, {
+    ...base,
+    headers: { ...(base.headers as any), ...CORS },
+  });
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -26,13 +29,19 @@ async function adminGQL<T = any>(
   shop: string,
   token: string,
   query: string,
-  variables?: Record<string, any>
+  variables?: Record<string, any>,
 ): Promise<T> {
-  const r = await fetch(`https://${shop}/admin/api/${API_VERSION}/graphql.json`, {
-    method: "POST",
-    headers: { "X-Shopify-Access-Token": token, "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables }),
-  });
+  const r = await fetch(
+    `https://${shop}/admin/api/${API_VERSION}/graphql.json`,
+    {
+      method: "POST",
+      headers: {
+        "X-Shopify-Access-Token": token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query, variables }),
+    },
+  );
   if (!r.ok) throw new Error(`GQL ${r.status}: ${await r.text()}`);
   return r.json() as Promise<T>;
 }
@@ -62,7 +71,12 @@ async function getLowStockSummary(shop: string, token: string) {
       const qty = v.inventoryQuantity ?? 0;
       const disc =
         v.compareAtPrice && v.price
-          ? Math.max(0, Math.round((1 - Number(v.price) / Number(v.compareAtPrice)) * 100))
+          ? Math.max(
+              0,
+              Math.round(
+                (1 - Number(v.price) / Number(v.compareAtPrice)) * 100,
+              ),
+            )
           : 0;
       return `- ${v.product.title} / ${v.title} (SKU:${v.sku || "-"}) 재고 ${qty}개${
         disc ? `, 세일 ${disc}%` : ""
@@ -81,10 +95,19 @@ async function getOnSaleTop(shop: string, token: string, limit = 20) {
     {
       products(first: 50, query: "status:ACTIVE") {
         nodes {
-          id title handle featuredImage { url }
+          id
+          title
+          handle
+          featuredImage {
+            url
+          }
           variants(first: 50) {
             nodes {
-              id title sku price compareAtPrice
+              id
+              title
+              sku
+              price
+              compareAtPrice
             }
           }
         }
@@ -126,8 +149,8 @@ async function getOnSaleTop(shop: string, token: string, limit = 20) {
     const lines = top.map(
       (v) =>
         `- ${v.productTitle} / ${v.variantTitle} (SKU:${v.sku || "-"}) 세일 ${v.discountPct}% → ${Math.round(
-          v.price
-        ).toLocaleString()}원`
+          v.price,
+        ).toLocaleString()}원`,
     );
     return `세일 TOP${top.length}\n${lines.join("\n")}`;
   } catch {
@@ -153,15 +176,26 @@ function violatesPolicy(userText: string) {
 
 // gemini 호출
 export async function action({ request }: ActionFunctionArgs) {
+  // 0) App Proxy 서명 검증
+  try {
+    await shopify.authenticate.public.appProxy(request);
+  } catch (e: any) {
+    console.log("서명 검증 실패F");
+    return j({ ok: false, where: "appProxy-auth", error: String(e) }, 401);
+  }
+
   // 0) App Proxy 요청 검증
   await shopify.authenticate.public.appProxy(request);
 
   // 1) shop & 세션
   const url = new URL(request.url);
-  const shop = (url.searchParams.get("shop") ?? "").replace(/^https?:\/\//, "").toLowerCase();
+  const shop = (url.searchParams.get("shop") ?? "")
+    .replace(/^https?:\/\//, "")
+    .toLowerCase();
   const offlineId = `offline_${shop}`;
   const sess = await shopify.sessionStorage.loadSession(offlineId);
-  if (!sess?.accessToken) return j({ ok: false, message: "No offline token" }, 401);
+  if (!sess?.accessToken)
+    return j({ ok: false, message: "No offline token" }, 401);
 
   // 2) 바디
   let question = "";
@@ -169,12 +203,14 @@ export async function action({ request }: ActionFunctionArgs) {
     const body = await request.json();
     question = (body?.question ?? "").toString().slice(0, 2000);
   } catch {}
-  if (!question) return j({ ok: true, answer: "궁금한 상품/세일을 물어보세요. 😊" });
+  if (!question)
+    return j({ ok: true, answer: "궁금한 상품/세일을 물어보세요. 😊" });
 
   if (violatesPolicy(question)) {
     return j({
       ok: true,
-      answer: "개인 주문/주소/연락처 확인은 도와드릴 수 없어요. 상품·세일·재고 관련으로 질문해 주세요!",
+      answer:
+        "개인 주문/주소/연락처 확인은 도와드릴 수 없어요. 상품·세일·재고 관련으로 질문해 주세요!",
     });
   }
 
@@ -209,10 +245,11 @@ export async function action({ request }: ActionFunctionArgs) {
   let answer = "";
 
   try {
-    const GEMINI = process.env.GOOGLE_GEMINI_API_KEY;
+    const GEMINI = process.env.GEMINI_API_KEY;
     if (!GEMINI) throw new Error("No GEMINI key");
     const res = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + GEMINI,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
+        GEMINI,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -222,15 +259,24 @@ export async function action({ request }: ActionFunctionArgs) {
             { role: "user", parts: [{ text: userPrompt }] },
           ],
           safetySettings: [
-            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+            {
+              category: "HARM_CATEGORY_HATE_SPEECH",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+            {
+              category: "HARM_CATEGORY_HARASSMENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
           ],
         }),
-      }
+      },
     );
     const data = await res.json();
-    answer = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "답변을 생성하지 못했어요.";
+    answer =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "답변을 생성하지 못했어요.";
   } catch (e) {
+    console.log("error:", e);
     answer = "지금은 답변을 만들지 못했어요. 잠시 후 다시 시도해 주세요.";
   }
 

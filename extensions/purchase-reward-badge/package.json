@@ -4,13 +4,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "build": "esbuild src/main.ts --bundle --outfile=assets/chatbot.js",
     "watch": "esbuild src/main.ts --bundle --outfile=assets/chatbot.js --watch"
-
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  }
 }
